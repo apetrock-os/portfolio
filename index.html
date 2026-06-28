@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Alexia Petrakos</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --plum:       #1e1525;
+      --plum-mid:   #2d1f3d;
+      --cream:      #faf7f2;
+      --cream-dim:  #f0ebe2;
+      --gold:       #c9a84c;
+      --gold-light: #e0c06a;
+      --lavender:   #a896b8;
+      --text-dark:  #1e1525;
+      --text-mid:   #5a4f66;
+      --text-light: #9b8fa8;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    /* ── Background moon watermark ── */
+    @keyframes moon-drift {
+      0%, 100% { opacity: 0.06; transform: translateY(0) rotate(-4deg); }
+      50%       { opacity: 0.10; transform: translateY(-10px) rotate(4deg); }
+    }
+
+    .bg-moon {
+      position: absolute;
+      right: 6%;
+      top: 50%;
+      transform: translateY(-50%) rotate(-4deg);
+      font-size: clamp(14rem, 32vw, 26rem);
+      color: var(--gold);
+      opacity: 0.07;
+      pointer-events: none;
+      user-select: none;
+      line-height: 1;
+      animation: moon-drift 14s ease-in-out infinite;
+      z-index: 0;
+      text-shadow: 0 0 80px rgba(201, 168, 76, 0.18);
+    }
+
+    /* ── Sparkle / whimsy ── */
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.12; transform: scale(0.85) rotate(0deg); }
+      50%       { opacity: 0.55; transform: scale(1.15) rotate(20deg); }
+    }
+
+    @keyframes twinkle-slow {
+      0%, 100% { opacity: 0.08; transform: scale(1) rotate(0deg); }
+      50%       { opacity: 0.4;  transform: scale(1.2) rotate(-15deg); }
+    }
+
+    .sparkle {
+      position: absolute;
+      color: var(--gold);
+      pointer-events: none;
+      user-select: none;
+      font-style: normal;
+      line-height: 1;
+    }
+
+    .section-label::before {
+      content: '✦';
+      margin-right: 0.6rem;
+      font-size: 0.55rem;
+      opacity: 0.7;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--cream);
+      color: var(--text-dark);
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    /* ── Nav ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.25rem 3rem;
+      background: rgba(250, 247, 242, 0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(201, 168, 76, 0.15);
+    }
+
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      font-weight: 400;
+      color: var(--text-dark);
+      letter-spacing: 0.04em;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-mid);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--gold); }
+
+    /* ── Hero ── */
+    .hero-wrap {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 7rem 3rem 4rem;
+      max-width: 900px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.75rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3rem, 7vw, 5.5rem);
+      font-weight: 300;
+      line-height: 1.1;
+      color: var(--text-dark);
+      margin-bottom: 1.75rem;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .hero-sub {
+      font-size: 1.1rem;
+      color: var(--text-mid);
+      max-width: 520px;
+      line-height: 1.75;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-cta {
+      display: inline-block;
+      padding: 0.85rem 2.2rem;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      text-decoration: none;
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      transition: all 0.25s;
+    }
+
+    .hero-cta:hover {
+      background: var(--gold);
+      color: var(--cream);
+    }
+
+    /* ── Divider ── */
+    .divider {
+      width: 60px;
+      height: 1px;
+      background: var(--gold);
+      margin: 0 auto;
+      opacity: 0.4;
+    }
+
+    /* ── Section base ── */
+    section {
+      padding: 6rem 3rem;
+    }
+
+    .section-inner {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 2.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      max-width: 40px;
+      height: 1px;
+      background: var(--gold);
+      opacity: 0.4;
+    }
+
+    /* ── What I Do ── */
+    .what-i-do { background: var(--cream); }
+
+    .what-i-do h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 300;
+      line-height: 1.25;
+      margin-bottom: 2rem;
+      max-width: 620px;
+    }
+
+    .what-i-do p {
+      color: var(--text-mid);
+      max-width: 580px;
+      line-height: 1.85;
+      margin-bottom: 1rem;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+      margin-top: 3.5rem;
+    }
+
+    .service-card {
+      padding: 2rem 1.75rem;
+      border: 1px solid rgba(201, 168, 76, 0.2);
+      border-top: 2px solid var(--gold);
+      background: var(--cream-dim);
+    }
+
+    .service-card h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      font-weight: 400;
+      margin-bottom: 0.75rem;
+      color: var(--text-dark);
+    }
+
+    .service-card p {
+      font-size: 0.875rem;
+      color: var(--text-mid);
+      line-height: 1.7;
+    }
+
+    /* ── Currently (dark) ── */
+    .currently {
+      background: var(--plum);
+      color: var(--cream);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .currently .section-label { color: var(--gold-light); }
+    .currently .section-label::after { background: var(--gold-light); }
+
+    .currently h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+      font-weight: 300;
+      margin-bottom: 3rem;
+      color: var(--cream);
+    }
+
+    .current-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem;
+    }
+
+    .current-item {
+      border-left: 1px solid rgba(201, 168, 76, 0.3);
+      padding-left: 1.5rem;
+    }
+
+    .current-item .role-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      margin-bottom: 0.5rem;
+    }
+
+    .current-item h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      font-weight: 400;
+      color: var(--cream);
+      margin-bottom: 0.6rem;
+    }
+
+    .current-item p {
+      font-size: 0.875rem;
+      color: var(--lavender);
+      line-height: 1.75;
+    }
+
+    /* ── Stack ── */
+    .stack { background: var(--cream-dim); }
+
+    .stack h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+      font-weight: 300;
+      margin-bottom: 2.5rem;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+    }
+
+    .chip {
+      padding: 0.45rem 1.1rem;
+      background: var(--cream);
+      border: 1px solid rgba(30, 21, 37, 0.12);
+      font-size: 0.8rem;
+      color: var(--text-mid);
+      letter-spacing: 0.03em;
+    }
+
+    .chip.highlight {
+      border-color: rgba(201, 168, 76, 0.4);
+      color: var(--text-dark);
+    }
+
+    /* ── Contact (dark) ── */
+    .contact {
+      background: var(--plum-mid);
+      color: var(--cream);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contact h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 4vw, 3.25rem);
+      font-weight: 300;
+      margin-bottom: 1rem;
+      color: var(--cream);
+    }
+
+    .contact p {
+      color: var(--lavender);
+      margin-bottom: 2.5rem;
+      font-size: 0.95rem;
+    }
+
+    .contact-link {
+      display: inline-block;
+      padding: 0.9rem 2.5rem;
+      background: var(--gold);
+      color: var(--plum);
+      text-decoration: none;
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 500;
+      transition: background 0.2s;
+    }
+
+    .contact-link:hover { background: var(--gold-light); }
+
+    /* ── Filigree divider ── */
+    .filigree-divider {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      padding: 0 3rem;
+      background: var(--cream-dim);
+      height: 3rem;
+    }
+
+    .filigree-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(201, 168, 76, 0.35));
+    }
+
+    .filigree-line.right {
+      background: linear-gradient(to left, transparent, rgba(201, 168, 76, 0.35));
+    }
+
+    .filigree-ornament {
+      color: var(--gold);
+      opacity: 0.55;
+      font-size: 0.65rem;
+      letter-spacing: 0.5em;
+      white-space: nowrap;
+      font-style: normal;
+    }
+
+    /* ── Footer ── */
+    footer {
+      background: var(--plum);
+      padding: 2rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    footer p {
+      font-size: 0.75rem;
+      color: var(--lavender);
+      letter-spacing: 0.05em;
+    }
+
+    footer a {
+      font-size: 0.75rem;
+      color: rgba(201, 168, 76, 0.5);
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      transition: color 0.2s;
+    }
+
+    footer a:hover { color: var(--gold); }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <a href="#" class="nav-logo">Alexia Petrakos <span style="color:var(--gold);opacity:0.6;font-size:0.9em;">☽</span></a>
+    <ul class="nav-links">
+      <li><a href="#work">Work</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="https://linkedin.com/in/alexiapetrakos" target="_blank">LinkedIn</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero -->
+  <div class="hero-wrap">
+  <span class="bg-moon">☽</span>
+  <span class="sparkle" style="top:14%;right:18%;font-size:1.1rem;animation:twinkle 3.2s ease-in-out infinite;animation-delay:0s;">✦</span>
+  <span class="sparkle" style="top:28%;right:9%;font-size:0.65rem;animation:twinkle-slow 4.5s ease-in-out infinite;animation-delay:0.8s;">✦</span>
+  <span class="sparkle" style="top:52%;right:22%;font-size:1.4rem;animation:twinkle 5s ease-in-out infinite;animation-delay:1.4s;">✦</span>
+  <span class="sparkle" style="top:68%;right:6%;font-size:0.5rem;animation:twinkle-slow 3.8s ease-in-out infinite;animation-delay:0.3s;">✦</span>
+  <span class="sparkle" style="top:38%;right:35%;font-size:0.4rem;animation:twinkle 4.1s ease-in-out infinite;animation-delay:2s;">✦</span>
+  <span class="sparkle" style="top:80%;right:28%;font-size:0.8rem;animation:twinkle-slow 5.5s ease-in-out infinite;animation-delay:1s;">✦</span>
+  <span class="sparkle" style="top:20%;right:42%;font-size:0.35rem;animation:twinkle 3.6s ease-in-out infinite;animation-delay:2.5s;">✦</span>
+  <section class="hero" id="top">
+    <p class="hero-eyebrow">Operations Architect</p>
+    <h1>Operations that actually<br /><em>move things.</em></h1>
+    <p class="hero-sub">
+      Most of what I do starts with a conversation, not a system audit. I want to know how people actually work, what's slowing them down, and what they wish was different. Then I build around that.
+    </p>
+    <a href="#contact" class="hero-cta">Work with me</a>
+  </section>
+
+  </div><!-- /hero-wrap -->
+
+  <!-- What I Do -->
+  <section class="what-i-do" id="work">
+    <div class="section-inner">
+      <p class="section-label">What I do</p>
+      <h2>I make operations feel less like guesswork.</h2>
+      <p>
+        A lot of my process starts before I touch any software. I talk to the people who'll actually use what I build: what's working, what isn't, what they wish was easier.
+      </p>
+      <p>
+        The gap between what people ask for and what they actually need. That's usually where the interesting work is.
+      </p>
+
+      <div class="services-grid">
+        <div class="service-card">
+          <h3>Systems &amp; Integrations</h3>
+          <p>HubSpot, Shopify, ERP, and the glue between them. Workflows that don't fall apart when someone's out sick.</p>
+        </div>
+        <div class="service-card">
+          <h3>AI-Native Ops</h3>
+          <p>Practical automation and AI tooling, built for real business constraints, not demos.</p>
+        </div>
+        <div class="service-card">
+          <h3>Ops Strategy</h3>
+          <p>Triage, prioritization, and infrastructure planning for teams that are scaling faster than their processes.</p>
+        </div>
+        <div class="service-card">
+          <h3>Digital Transformation</h3>
+          <p>Honest assessment of what's working, what isn't, and how to get from here to there without burning it down.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stack -->
+  <section class="stack" id="stack">
+    <div class="section-inner">
+      <p class="section-label">Stack</p>
+      <h2>Tools I actually use.</h2>
+      <div class="chips">
+        <span class="chip highlight">HubSpot</span>
+        <span class="chip highlight">Shopify</span>
+        <span class="chip highlight">Monday.com</span>
+        <span class="chip">Xorosoft ERP</span>
+        <span class="chip">Google Workspace</span>
+        <span class="chip highlight">Claude / Anthropic API</span>
+        <span class="chip">Zapier</span>
+        <span class="chip">Slack</span>
+        <span class="chip">Notion</span>
+        <span class="chip">Node.js</span>
+        <span class="chip">JavaScript</span>
+        <span class="chip">REST APIs</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="filigree-divider">
+    <span class="filigree-line"></span>
+    <span class="filigree-ornament">✦ · ✦ · ✦</span>
+    <span class="filigree-line right"></span>
+  </div>
+
+  <!-- Contact -->
+  <section class="contact" id="contact">
+  <span class="sparkle" style="top:15%;left:6%;font-size:0.9rem;animation:twinkle 3.8s ease-in-out infinite;animation-delay:0.3s;">✦</span>
+  <span class="sparkle" style="top:60%;left:10%;font-size:0.4rem;animation:twinkle-slow 5.2s ease-in-out infinite;animation-delay:1.5s;">✦</span>
+  <span class="sparkle" style="top:25%;right:7%;font-size:1.3rem;animation:twinkle 4.4s ease-in-out infinite;animation-delay:0.7s;">✦</span>
+  <span class="sparkle" style="top:70%;right:5%;font-size:0.5rem;animation:twinkle-slow 3.6s ease-in-out infinite;animation-delay:2.2s;">✦</span>
+  <span class="sparkle" style="top:85%;left:50%;font-size:0.35rem;animation:twinkle 5.8s ease-in-out infinite;animation-delay:1s;">✦</span>
+    <div class="section-inner">
+      <p class="section-label" style="justify-content: center;">Get in touch</p>
+      <h2>Let's figure out what you actually need.</h2>
+      <p>Reach out by email and let's see if it's a fit.</p>
+      <a href="mailto:workwithme@alexiapetrakos.com" class="contact-link">Send a note ✦</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2026 Alexia Petrakos</p>
+    <a href="https://oddfires.com" target="_blank">odd fires ✦</a>
+  </footer>
+
+</body>
+</html>
